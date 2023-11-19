@@ -1,0 +1,14 @@
+type Posts @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  contents: String
+  profileID: ID! @index(name: "byProfile")
+}
+
+type Profile @model @auth(rules: [{allow: public}, {allow: private}]) {
+  id: ID!
+  user_id: String!
+  dark_mode: Boolean
+  Posts: [Posts] @hasMany(indexName: "byProfile", fields: ["id"])
+}
+ 
